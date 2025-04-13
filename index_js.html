@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Calculadora Moderna</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #1e1e2f;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      padding: 50px;
+    }
+    #calculadora {
+      background: #2d2d3d;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.4);
+      width: 300px;
+    }
+    #pantalla {
+      width: 100%;
+      font-size: 24px;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: none;
+      background: #1c1c2b;
+      color: #fff;
+      border-radius: 8px;
+      text-align: right;
+    }
+    .botones button {
+      width: 23%;
+      margin: 1%;
+      padding: 15px;
+      font-size: 18px;
+      background: #3a3a4f;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .botones button:hover {
+      background: #575777;
+    }
+    #historial {
+      margin-top: 15px;
+      background: #1c1c2b;
+      padding: 10px;
+      border-radius: 8px;
+      max-height: 120px;
+      overflow-y: auto;
+      font-size: 14px;
+    }
+    .historial-item {
+      border-bottom: 1px solid #444;
+      padding: 4px 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="calculadora">
+    <input type="text" id="pantalla" disabled />
+    <div class="botones">
+      <button onclick="agregar('7')">7</button>
+      <button onclick="agregar('8')">8</button>
+      <button onclick="agregar('9')">9</button>
+      <button onclick="agregar('/')">/</button>
+      
+      <button onclick="agregar('4')">4</button>
+      <button onclick="agregar('5')">5</button>
+      <button onclick="agregar('6')">6</button>
+      <button onclick="agregar('*')">*</button>
+      
+      <button onclick="agregar('1')">1</button>
+      <button onclick="agregar('2')">2</button>
+      <button onclick="agregar('3')">3</button>
+      <button onclick="agregar('-')">-</button>
+      
+      <button onclick="agregar('0')">0</button>
+      <button onclick="agregar('.')">.</button>
+      <button onclick="calcular()">=</button>
+      <button onclick="agregar('+')">+</button>
+      
+      <button onclick="limpiar()">C</button>
+    </div>
+    <div id="historial">
+      <strong>Historial:</strong>
+      <div id="historial-lista"></div>
+    </div>
+  </div>
+
+  <script>
+    function agregar(valor) {
+      document.getElementById('pantalla').value += valor;
+    }
+
+    function limpiar() {
+      document.getElementById('pantalla').value = '';
+    }
+
+    function calcular() {
+      const pantalla = document.getElementById('pantalla');
+      try {
+        const resultado = eval(pantalla.value);
+        agregarAlHistorial(pantalla.value + ' = ' + resultado);
+        pantalla.value = resultado;
+      } catch {
+        alert('Error en la operación');
+        pantalla.value = '';
+      }
+    }
+
+    function agregarAlHistorial(operacion) {
+      const historial = document.getElementById('historial-lista');
+      const item = document.createElement('div');
+      item.className = 'historial-item';
+      item.textContent = operacion;
+      historial.prepend(item);
+    }
+  </script>
+</body>
+</html>
